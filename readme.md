@@ -110,7 +110,160 @@ Data is persisted locally using the browser’s `localStorage`, making the app l
 
 ---
 
+# ⚙️ Core Logic – How It Works
 
+## 🔁 Reactive Update Pattern (Pub/Sub)
+
+- **Single source of truth** → `state.js` holds all data:
+  - `transactions`
+  - `currentRole`
+  - `filters` (search, category, type, sort, date range)
+
+- **Refresh callback** → `main.js` registers a function using `setRefreshCallback()` that re-renders the entire UI.
+
+- **Automatic updates** → Every time data changes:
+  - Add / Edit / Delete transaction  
+  - Change filter  
+  - Switch role  
+  - Toggle dark mode  
+  - Apply date range  
+
+  👉 `refreshUI()` is called, which:
+  - Saves updated state to `localStorage`
+  - Triggers the registered callback
+
+- **Full UI Re-render** → The callback updates:
+  - Summary cards  
+  - Charts (Line + Doughnut)  
+  - Transaction table  
+  - Insights section  
+  - Period summary  
+
+✅ Result: UI is always perfectly in sync with data (no manual DOM updates scattered around)
+
+---
+
+## 📦 Data Flow (Step by Step)
+
+1. **User Action**
+   - Clicks “Add”, types search, selects date range, toggles theme, etc.
+
+2. **Event Handling**
+   - `main.js` calls functions from `state.js`  
+     *(e.g., `addTransaction()`, `setFilter()`, `setRole()`)*
+
+3. **State Update**
+   - Global state in `state.js` is updated
+
+4. **Trigger Refresh**
+   - `refreshUI()`:
+     - Saves to `localStorage`
+     - Calls registered callback
+
+5. **UI Re-render**
+   - `refreshAll()` in `main.js` updates everything
+
+✅ Result: Always consistent and predictable UI
+
+---
+
+## 🧩 Pure Functions for Filtering & Sorting
+
+- Located in `utils.js`
+- Do **not mutate original data**
+- Always return a new processed array
+
+### Benefits:
+- Predictable behavior  
+- Easy testing  
+- No side effects  
+
+### Examples:
+- `getFilteredSortedTransactions()`
+- `getTotalsForRange()`
+
+---
+
+## 📊 Chart Re-rendering
+
+- Charts are **destroyed & recreated** on every update
+
+### 📈 Line Chart
+- Shows cumulative balance over time
+- Supports ranges: `3D`, `7D`, `30D`, `2M`, `3M`, `1Y`
+- Iterates through transactions up to each date
+
+### 🍩 Doughnut Chart
+- Groups expenses by category dynamically
+
+### 🌙 Dark Mode Support
+- Uses CSS variables:
+  - `--primary`
+  - `--text`
+  - `--card-bg`
+- Charts automatically adapt on theme change
+
+---
+
+## 💾 Persistence (LocalStorage)
+
+- On load → `loadFromLocalStorage()` restores:
+  - Transactions  
+  - Role  
+  - Filters  
+
+- If empty → default mock data is used
+
+- Every update automatically saves:
+  - Add / Edit / Delete  
+  - Filter changes  
+  - Role changes  
+  - Date range  
+
+✅ Page refresh = no data loss
+
+---
+
+## 🌍 Why ES Modules + Local Server?
+
+- Uses **ES6 Modules (`import/export`)**:
+  - `state.js` → data layer  
+  - `utils.js` → logic layer  
+  - `chart.js` → chart handling  
+  - `main.js` → UI + events  
+
+- ❌ Browsers block modules via `file://` (CORS issue)
+
+- ✅ Solution:
+  - Live Server  
+  - `python -m http.server`  
+  - `npx http-server`  
+
+---
+
+# ✨ Features Overview
+
+| Feature | How It Works |
+|--------|-------------|
+| **Summary Cards** | `getTotals()` computes balance, income, expenses |
+| **Role-based Access** | `currentRole` controls UI (admin/viewer) |
+| **Search & Filters** | `setFilter()` + `getFilteredSortedTransactions()` |
+| **Date Range Filter** | Filters transactions + shows period summary |
+| **Transaction Table** | Dynamically rendered; edit/delete for admin only |
+| **Insights Section** | Calculates trends, averages, savings rate |
+| **Dark Mode Toggle** | Adds `.dark` class; updates CSS variables |
+| **Charts** | Line (balance) + Doughnut (category breakdown) |
+| **LocalStorage** | Full data persistence (no backend needed) |
+
+---
+
+## ✅ Final Outcome
+
+- Clean architecture  
+- Fully reactive UI  
+- Modular design  
+- Easy to scale & maintain  
+- No frameworks required 🚀
 
 # 📁 File Structure
 
