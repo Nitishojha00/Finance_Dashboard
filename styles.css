@@ -1,0 +1,622 @@
+/* ===== CSS Variables ===== */
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #06ffa5;
+    --danger: #ef476f;
+    --warning: #ffd166;
+    --success: #06ffa5;
+    --dark: #1e2a3e;
+    --light: #f8fafc;
+    --gray: #64748b;
+    --gray-light: #e2e8f0;
+    --bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --text: #0f172a;
+    --text-light: #475569;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark {
+    --primary: #5e7eff;
+    --primary-dark: #4a6bff;
+    --secondary: #06ffa5;
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --text-light: #cbd5e1;
+    --gray-light: #334155;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+/* Container */
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: var(--card-bg);
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gray-light);
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Role Selector */
+.role-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid var(--gray-light);
+}
+
+select {
+    background: var(--card-bg);
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gray-light);
+    color: var(--text);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #d64161;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+/* ===== Summary Cards ===== */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    border: 1px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.card .value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+/* ===== Charts Row ===== */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-container {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.chart-container h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 280px;
+}
+
+.empty-chart-msg {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+    font-style: italic;
+    background: var(--bg);
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* ===== Transactions Section ===== */
+.transactions-section {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-light);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.filters input,
+.filters select {
+    background: var(--bg);
+    border: 1px solid var(--gray-light);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    outline: none;
+    transition: var(--transition);
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+}
+
+th, td {
+    text-align: left;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+th {
+    font-weight: 600;
+    background: var(--bg);
+    color: var(--text-light);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+tr:hover {
+    background: var(--bg);
+}
+
+.transaction-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ===== Insights ===== */
+.insights {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-light);
+}
+
+.insights h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.insight-card {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid var(--gray-light);
+}
+
+.insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.insight-card strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--primary);
+}
+
+/* ===== Modal ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--gray-light);
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid var(--gray-light);
+    border-radius: 1rem;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: var(--transition);
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    .charts-row {
+        grid-template-columns: 1fr;
+    }
+    .summary-cards {
+        gap: 1rem;
+    }
+    .card .value {
+        font-size: 2rem;
+    }
+    .filters {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .filters input,
+    .filters select {
+        flex: 1;
+        min-width: 120px;
+    }
+    /* Table as cards */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead {
+        display: none;
+    }
+    tr {
+        margin-bottom: 1rem;
+        border: 1px solid var(--gray-light);
+        border-radius: 1rem;
+        padding: 1rem;
+        background: var(--card-bg);
+    }
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: none;
+        gap: 1rem;
+    }
+    td:last-child {
+        border-bottom: none;
+    }
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        width: 40%;
+        color: var(--text-light);
+    }
+    .transaction-actions {
+        justify-content: flex-end;
+    }
+    .chart-container canvas {
+        max-height: 240px;
+    }
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.range-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+.range-btn {
+    background: var(--bg);
+    border: 1px solid var(--gray-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    color: var(--text);
+}
+.range-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+.range-btn:hover:not(.active) {
+    background: var(--gray-light);
+}
+
+/* Make chart containers maintain a nice aspect ratio */
+.chart-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.chart-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 320px;
+    aspect-ratio: 16 / 9;  /* keeps proportions */
+}
+@media (max-width: 768px) {
+    .chart-container canvas {
+        max-height: 240px;
+        aspect-ratio: 16 / 13;
+    }
+}
+
+/* Date range filter row */
+.date-range-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--bg);
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    margin: 1rem 0 0.5rem 0;
+    border: 1px solid var(--gray-light);
+}
+.date-range-filter label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+.date-range-filter input {
+    background: var(--card-bg);
+    border: 1px solid var(--gray-light);
+    padding: 0.4rem 0.75rem;
+    border-radius: 1.5rem;
+    color: var(--text);
+}
+
+/* Period summary card */
+.period-summary {
+    margin: 1rem 0 1.5rem 0;
+}
+.period-summary-card {
+    background: linear-gradient(135deg, var(--primary)10, var(--card-bg));
+    border-left: 4px solid var(--primary);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+.period-summary-card h4 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    color: var(--primary);
+}
+.period-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.period-stats div {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+}
+.period-stats strong {
+    margin-right: 0.5rem;
+}
