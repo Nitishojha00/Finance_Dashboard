@@ -75,6 +75,43 @@ Data is persisted locally using the browser’s `localStorage`, making the app l
 
 ---
 
+
+## ⚙️ How It Works (Core Logic)
+
+### 🔁 Reactive Update Pattern (Pub/Sub)
+- `state.js` holds the **single source of truth** – `transactions`, `currentRole`, `filters`.
+- A `refreshCallback` is registered by `main.js` using `setRefreshCallback()`.
+- Every time data changes (add, edit, delete, filter, role, date range, dark mode), `refreshUI()` is called → saves to `localStorage` → triggers the callback.
+- The callback then **re‑renders everything** – summaries, charts, transaction table, insights, period summary.
+
+### 📦 Data Flow
+1. User action (click Add, change filter, select date range, toggle dark mode)
+2. Event handler in `main.js` calls the corresponding `state.js` function (e.g., `addTransaction`, `setFilter`, `setRole`)
+3. `state.js` updates the global array/object → calls `refreshUI()` → saves to `localStorage` → calls the registered callback
+4. Callback runs `refreshAll()` in `main.js` → re‑renders all UI components using the latest state
+
+### 🧩 Pure Functions for Filtering & Sorting
+- `utils.js` contains **pure functions** – they take the current state and return a new filtered/sorted array without mutating the original.
+- This makes the logic predictable and easy to test.
+
+### 📊 Chart Re‑rendering
+- Charts are destroyed and recreated on **every data change** (including dark mode toggle).
+- Line chart fetches cumulative balance for the selected range (3D to 1Y) by iterating through all transactions up to each date.
+- Doughnut chart groups expenses by category on the fly.
+- Both charts read CSS variables (`--primary`, `--text`, etc.) so they automatically adapt to dark/light mode.
+
+### 💾 Persistence
+- On page load, `loadFromLocalStorage()` restores data. If empty, default mock data is inserted.
+- Any mutation immediately overwrites the `localStorage` keys.
+
+### 🌐 Why ES Modules + Local Server?
+- The code uses `import/export` (ES6 modules) for clean separation of concerns.
+- Browsers block module imports when opening `file://` due to CORS. Hence a local server (Live Server, Python, Node.js) is **required**.
+
+---
+
+
+
 # 📁 File Structure
 
 ```
